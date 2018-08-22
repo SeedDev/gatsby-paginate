@@ -37,14 +37,13 @@ const createPaginatedPages = (
           ? buildPath(pageIndex, pathPrefix)
           : buildPaginationRoute(pageIndex, pathPrefix),
       component: template,
-      context: Object.assign({
+      context: Object.assign(context, {
         group,
         pathPrefix,
         first: isFirstPage(index),
         last: isLastPage(index, groups),
         index: index + 1,
-        pageCount: groups.length,
-        additionalContext: context
+        pageCount: groups.length
       }),
       layout
     });
@@ -59,7 +58,7 @@ module.exports = ({
   pathPrefix = "",
   buildPath = null,
   context = {},
-  layout = 'index'
+  layout = "index"
 }) => {
   const paginationTemplate = path.resolve(pageTemplate);
   createPaginatedPages(
