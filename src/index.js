@@ -31,22 +31,27 @@ const createPaginatedPages = (
 ) => {
   posts.forEach((group, index, groups) => {
     const pageIndex = getPageIndex(index);
-    return createPage({
+
+    const context = Object.assign(context, {
+      group,
+      pathPrefix,
+      first: isFirstPage(index),
+      last: isLastPage(index, groups),
+      index: index + 1,
+      pageCount: groups.length
+    });
+
+    const newPage = {
       path:
         typeof buildPath === "function"
           ? buildPath(pageIndex, pathPrefix)
           : buildPaginationRoute(pageIndex, pathPrefix),
       component: template,
-      context: Object.assign(context, {
-        group,
-        pathPrefix,
-        first: isFirstPage(index),
-        last: isLastPage(index, groups),
-        index: index + 1,
-        pageCount: groups.length
-      }),
+      context,
       layout
-    });
+    };
+
+    return createPage(newPage);
   });
 };
 
