@@ -32,7 +32,7 @@ const createPaginatedPages = (
   posts.forEach((group, index, groups) => {
     const pageIndex = getPageIndex(index);
 
-    const context = Object.assign(context, {
+    const newContext = Object.assign(context, {
       group,
       pathPrefix,
       first: isFirstPage(index),
@@ -47,7 +47,7 @@ const createPaginatedPages = (
           ? buildPath(pageIndex, pathPrefix)
           : buildPaginationRoute(pageIndex, pathPrefix),
       component: template,
-      context,
+      context: newContext,
       layout
     };
 
